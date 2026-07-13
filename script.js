@@ -4,6 +4,27 @@ document.querySelectorAll(".faq").forEach((faq) =>
 
 const menuButton = document.querySelector(".menu");
 const links = document.querySelector(".links");
+const navLinks = document.querySelectorAll(".links a:not(.btn)");
+
+const setActiveNavLink = (activeLink) => {
+    navLinks.forEach((link) => {
+        link.classList.toggle("active", link === activeLink);
+    });
+};
+
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+navLinks.forEach((link) => {
+    const linkPage = new URL(link.href, window.location.href).pathname.split("/").pop();
+
+    if (linkPage === currentPage) {
+        link.classList.add("active");
+    }
+
+    link.addEventListener("click", () => {
+        setActiveNavLink(link);
+    });
+});
 
 if (menuButton && links) {
     const closeMenu = () => {
